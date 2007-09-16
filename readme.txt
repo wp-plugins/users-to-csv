@@ -1,0 +1,31 @@
+=== Plugin Name ===
+Contributors: joostdevalk
+Donate link: http://www.joostdevalk.nl/donate/
+Tags: comments, admin, export, csv
+Requires at least: 2.0
+Tested up to: 2.3
+Stable tag: 1.0
+
+This plugin adds an admin screen under "Users", giving two options: exporting the current users to a csv file and exporting the unique commenters on your blog to a csv file.
+
+== Description ==
+
+This plugin adds an admin screen under "Users", giving two options: exporting the current users to a csv file and exporting the unique commenters on your blog to a csv file.
+
+You could use this plugin to kickstart your mailinglist!
+
+== Installation ==
+
+1. Upload `users2csv.php` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Go to the new Users2CSV tab under Users, and export whatever you want!
+
+== Screenshots ==
+
+1. Screenshot of the admin screen added by this plugin.
+
+== More info ==
+
+* For more info, version history, etc. check out the page on my site about the [Users to CSV plugin](ttp://www.joostdevalk.nl/wordpress/users-to-csv/). 
+* To check out the other WordPress plugins I wrote, check out my [WordPress plugins](http://www.joostdevalk.nl/wordpress/) page.
+* For updates about this plugin and other plugins I created read my [SEO blog](http://www.joostdevalk.nl/)
