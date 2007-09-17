@@ -14,6 +14,11 @@ This plugin adds an admin screen under "Users", giving two options: exporting th
 
 You could use this plugin to kickstart your mailinglist!
 
+More info:
+
+* [Users to csv WordPress plugin](http://www.joostdevalk.nl/wordpress/users-to-csv/).
+* Other [Wordpress plugins](http://www.joostdevalk.nl/wordpress/) by the same author.
+
 == Installation ==
 
 1. Upload `users2csv.php` to the `/wp-content/plugins/` directory
