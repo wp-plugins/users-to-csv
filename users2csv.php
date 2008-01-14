@@ -4,7 +4,7 @@ Plugin Name: Users to CSV
 Plugin URI: http://www.joostdevalk.nl/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file. Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
-Version: 1.0
+Version: 1.2
 Author URI: http://www.joostdevalk.nl/
 */
 
@@ -122,24 +122,12 @@ function createcsv($table = 'users') {
 	global $wpdb;
 	// Get the columns and create the first row of the CSV
 	switch($table) {
-		case 'users':
-			$query = "SHOW COLUMNS FROM $wpdb->users";
-			$results = $wpdb->get_results($query,ARRAY_A);
-			$fields = array();
-			foreach ($results as $result) {
-				$fields[] = $result['Field'];
-			}
-			break;
 		case 'comments':
-			$fields = array('comment_author','comment_author_email','comment_author_url');
+			$fields = array('Name','E-Mail','URL');
 			break;
+		case 'users':
 		default:
-			$query = "SHOW COLUMNS FROM $wpdb->users";
-			$results = $wpdb->get_results($query,ARRAY_A);
-			$fields = array();
-			foreach ($results as $result) {
-				$fields[] = $result['Field'];
-			}
+			$fields = array('ID','E-Mail','URL','Display Name','Registration Date','First Name','Last Name','Nickname');
 			break;
 	}
 	$csv = arrayToCsvString($fields);
@@ -147,17 +135,28 @@ function createcsv($table = 'users') {
 
 	// Query the entire contents from the Users table and put it into the CSV
 	switch($table) {
-		case 'users':
-			$query = "SELECT * FROM $wpdb->users";
-			break;
 		case 'comments':
 			$query = "SELECT DISTINCT comment_author, comment_author_email, comment_author_url FROM $wpdb->comments WHERE comment_approved = '1'";
 			break;
+		case 'users':
 		default:
-			$query = "SELECT * FROM $wpdb->users";
+			$query = "SELECT ID, user_email, user_url, user_nicename, user_registered FROM $wpdb->users";
 			break;
 	}
 	$results = $wpdb->get_results($query,ARRAY_A);
+	$i=0;
+	if ($table == 'users') {
+		while ($i < count($results)) {
+			$query = "SELECT meta_value FROM wp_usermeta WHERE user_id = ".$results[$i]['ID']." AND meta_key = ";
+			$fnquery = $query . "'first_name'";
+			$results[$i]['first_name'] = $wpdb->get_var($fnquery);
+			$lnquery = $query . "'last_name'";
+			$results[$i]['last_name'] = $wpdb->get_var($lnquery);
+			$nnquery = $query . "'nickname'";
+			$results[$i]['nickname'] = $wpdb->get_var($nnquery);
+			$i++;
+		}
+	}
 	$csv .= arrayToCsvString($results);
 
 	$now = gmdate('D, d M Y H:i:s') . ' GMT';
