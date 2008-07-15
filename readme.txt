@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: joostdevalk
-Donate link: http://www.joostdevalk.nl/donate/
+Donate link: http://yoast.com/donate/
 Tags: comments, admin, export, csv
 Requires at least: 2.0
 Tested up to: 2.3.2
@@ -16,8 +16,8 @@ You could use this plugin to kickstart your mailinglist!
 
 More info:
 
-* [Users to csv WordPress plugin](http://www.joostdevalk.nl/wordpress/users-to-csv/).
-* Other [Wordpress plugins](http://www.joostdevalk.nl/wordpress/) by the same author.
+* [Users to csv WordPress plugin](http://yoast.com/wordpress/users-to-csv/).
+* Other [Wordpress plugins](http://yoast.com/wordpress/) by the same author.
 
 == Installation ==
 
@@ -31,6 +31,6 @@ More info:
 
 == More info ==
 
-* For more info, version history, etc. check out the page on my site about the [Users to CSV plugin](ttp://www.joostdevalk.nl/wordpress/users-to-csv/). 
-* To check out the other WordPress plugins I wrote, check out my [WordPress plugins](http://www.joostdevalk.nl/wordpress/) page.
-* For updates about this plugin and other plugins I created read my [SEO blog](http://www.joostdevalk.nl/)
+* For more info, version history, etc. check out the page on my site about the [Users to CSV plugin](ttp://yoast.com/wordpress/users-to-csv/). 
+* To check out the other WordPress plugins I wrote, check out my [WordPress plugins](http://yoast.com/wordpress/) page.
+* For updates about this plugin, news about other plugins I created, and tips about WordPress optimization read my [SEO blog](http://yoast.com/)

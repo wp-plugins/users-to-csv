@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Users to CSV
-Plugin URI: http://www.joostdevalk.nl/wordpress/users-to-csv/
+Plugin URI: http://yoast.com/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file. Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
 Version: 1.2
-Author URI: http://www.joostdevalk.nl/
+Author URI: http://yoast.com/
 */
 
 function _valToCsvHelper($val, $separator, $trimFunction) {
