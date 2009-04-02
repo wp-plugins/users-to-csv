@@ -240,7 +240,7 @@ if (is_admin()) {
 				<ul style="list-style-type:square; padding-left: 30px;">
 					<li>Blog about it! Tell your readers you like it! (And don't forget to link to its <a href="http://yoast.com/wordpress/users-to-csv/">homepage</a> :) )</li>
 					<li>Give it a <a href="http://wordpress.org/extend/plugins/users-to-csv/">good rating on WordPress.org</a>.</li>
-					<li>Or <a href="http://yoast.com/out/plugin-donate/<?php echo urlencode("Users to CSV by Joost de Valk of Yoast.com"); ?>/">send me a small donation</a>! (through PayPal, if you don't have an account, you can donate with your credit card or bank account through PayPal too!)</li>
+					<li>Or <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3262694">send me a small donation</a>! (through PayPal, if you don't have an account, you can donate with your credit card or bank account through PayPal too!)</li>
 				</li>
 			</div>
 			<?php
