@@ -4,10 +4,10 @@ Plugin Name: Users to CSV
 Plugin URI: http://yoast.com/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file.<br/> Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
-Version: 1.4
+Version: 1.4.1
 Author URI: http://yoast.com/
 
-Copyright 2008 Joost de Valk (email: joost@yoast.com)
+Copyright 2008-2009 Joost de Valk (email: joost@yoast.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -210,7 +210,7 @@ if (is_admin()) {
 
 			function add_config_page() {
 				global $wpdb;
-				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 1, basename(__FILE__), array('Users2CSV','config_page'));
+				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 9, basename(__FILE__), array('Users2CSV','config_page'));
 				add_filter( 'plugin_action_links', array( 'Users2CSV', 'filter_plugin_actions'), 10, 2 );
 				add_filter( 'ozh_adminmenu_icon', array( 'Users2CSV', 'add_ozh_adminmenu_icon' ) );				
 			}
@@ -239,6 +239,7 @@ if (is_admin()) {
 				<h2>Do you like this plugin?</h2>
 				<ul style="list-style-type:square; padding-left: 30px;">
 					<li>Blog about it! Tell your readers you like it! (And don't forget to link to its <a href="http://yoast.com/wordpress/users-to-csv/">homepage</a> :) )</li>
+					<li>Give it a <a href="http://wordpress.org/extend/plugins/users-to-csv/">good rating on WordPress.org</a>.</li>
 					<li>Or <a href="http://yoast.com/out/plugin-donate/<?php echo urlencode("Users to CSV by Joost de Valk of Yoast.com"); ?>/">send me a small donation</a>! (through PayPal, if you don't have an account, you can donate with your credit card or bank account through PayPal too!)</li>
 				</li>
 			</div>
