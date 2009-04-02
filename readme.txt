@@ -4,7 +4,7 @@ Donate link: http://yoast.com/donate/
 Tags: comments, admin, export, csv
 Requires at least: 2.0
 Tested up to: 2.7
-Stable tag: 1.4
+Stable tag: 1.4.1
 
 This plugin adds an admin screen under "Users", giving two options: exporting the current users to a csv file and exporting the unique commenters on your blog to a csv file.
 
