@@ -4,10 +4,10 @@ Plugin Name: Users to CSV
 Plugin URI: http://yoast.com/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file.<br/> Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
-Version: 1.4.1
+Version: 1.4.4
 Author URI: http://yoast.com/
 
-Copyright 2008-2009 Joost de Valk (email: joost@yoast.com)
+Copyright 2008-2010 Joost de Valk (email: joost@yoast.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if (is_admin()) {
+if ( is_admin() ) {
 
 	if ($_GET['page'] == "users2csv.php") {
 		function _valToCsvHelper($val, $separator, $trimFunction) {
@@ -146,7 +146,7 @@ if (is_admin()) {
 					break;
 				case 'users':
 				default:
-					$fields = array('ID','E-Mail','URL','Display Name','Registration Date','First Name','Last Name','Nickname');
+					$fields = array('URL','E-Mail','URL','Display Name','Registration Date','First Name','Last Name','Nickname');
 					break;
 			}
 			$csv = arrayToCsvString($fields, $sep);
@@ -159,14 +159,14 @@ if (is_admin()) {
 					break;
 				case 'users':
 				default:
-					$query = "SELECT ID, user_email, user_url, user_nicename, user_registered FROM $wpdb->users";
+					$query = "SELECT ID as UID, user_email, user_url, user_nicename, user_registered FROM $wpdb->users";
 					break;
 			}
 			$results = $wpdb->get_results($query,ARRAY_A);
 			$i=0;
 			if ($table == 'users') {
 				while ($i < count($results)) {
-					$query = "SELECT meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id = ".$results[$i]['ID']." AND meta_key = ";
+					$query = "SELECT meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id = ".$results[$i]['UID']." AND meta_key = ";
 					$fnquery = $query . "'first_name'";
 					$results[$i]['first_name'] = $wpdb->get_var($fnquery);
 					$lnquery = $query . "'last_name'";
@@ -189,19 +189,24 @@ if (is_admin()) {
 			echo $csv;
 		}
 
-		if ($_GET['csv'] == "true") {
-			$table = $_GET['table'];
-			$sep = ";";
-			if (isset($_GET['sep'])) {
-				$sep = $_GET['sep'];
-				if ($sep == "tab") {
-					$sep = "\t";
+		function yoast_getcsv() {
+			if ($_GET['csv'] == "true") {
+				if ( !current_user_can('edit_users') )
+					wpdie('No, that won\'t be working, sorry.');
+				$table = $_GET['table'];
+				$sep = ";";
+				if (isset($_GET['sep'])) {
+					$sep = $_GET['sep'];
+					if ($sep == "tab") {
+						$sep = "\t";
+					}
 				}
-			}
-			// echo $table;
-			createcsv($table, $sep);
-			exit;
+				// echo $table;
+				createcsv($table, $sep);
+				exit;
+			}			
 		}
+		add_action('admin_menu','yoast_getcsv');
 	}
 
 	if ( ! class_exists( 'Users2CSV' ) && !$_GET['csv'] == "true" ) {
@@ -210,7 +215,7 @@ if (is_admin()) {
 
 			function add_config_page() {
 				global $wpdb;
-				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 9, basename(__FILE__), array('Users2CSV','config_page'));
+				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 'edit_users', basename(__FILE__), array('Users2CSV','config_page'));
 				add_filter( 'plugin_action_links', array( 'Users2CSV', 'filter_plugin_actions'), 10, 2 );
 				add_filter( 'ozh_adminmenu_icon', array( 'Users2CSV', 'add_ozh_adminmenu_icon' ) );				
 			}
