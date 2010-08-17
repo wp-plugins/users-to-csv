@@ -4,7 +4,7 @@ Plugin Name: Users to CSV
 Plugin URI: http://yoast.com/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file.<br/> Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
-Version: 1.4.4
+Version: 1.4.5
 Author URI: http://yoast.com/
 
 Copyright 2008-2010 Joost de Valk (email: joost@yoast.com)
@@ -190,7 +190,7 @@ if ( is_admin() ) {
 		}
 
 		function yoast_getcsv() {
-			if ($_GET['csv'] == "true") {
+			if (isset($_GET['csv']) && $_GET['csv'] == "true") {
 				if ( !current_user_can('edit_users') )
 					wpdie('No, that won\'t be working, sorry.');
 				$table = $_GET['table'];
@@ -221,6 +221,7 @@ if ( is_admin() ) {
 			}
 		
 			function config_page() {
+				$baseurl = admin_url( 'users.php?page=' . basename(__FILE__) );
 			?>
 			<div class="wrap" style="max-width:600px !important;">
 				<h2>Export Users and Commenters to CSV file</h2>
@@ -229,13 +230,13 @@ if ( is_admin() ) {
 				</p>
 				<p><strong>Normal export with semicolons as separator:</strong></p>
 				<ul>
-					<li><a href="<?php bloginfo('url');?>/wp-admin/users.php?page=<?php echo basename(__FILE__); ?>&amp;csv=true&amp;table=users">Export Users</a></li>
-					<li><a href="<?php bloginfo('url');?>/wp-admin/users.php?page=<?php echo basename(__FILE__); ?>&amp;csv=true&amp;table=comments">Export Unique Commenters</a></li>
+					<li><a href="<?php echo $baseurl ?>&amp;csv=true&amp;table=users">Export Users</a></li>
+					<li><a href="<?php echo $baseurl ?>&amp;csv=true&amp;table=comments">Export Unique Commenters</a></li>
 				</ul>
 				<p><strong>Export with tabs as separator:</strong></p>
 				<ul>
-					<li><a href="<?php bloginfo('url');?>/wp-admin/users.php?page=<?php echo basename(__FILE__); ?>&amp;csv=true&amp;table=users&amp;sep=tab">Export Users</a></li>
-					<li><a href="<?php bloginfo('url');?>/wp-admin/users.php?page=<?php echo basename(__FILE__); ?>&amp;csv=true&amp;table=comments&amp;sep=tab">Export Unique Commenters</a></li>
+					<li><a href="<?php echo $baseurl ?>&amp;csv=true&amp;table=users&amp;sep=tab">Export Users</a></li>
+					<li><a href="<?php echo $baseurl ?>&amp;csv=true&amp;table=comments&amp;sep=tab">Export Unique Commenters</a></li>
 				</ul>
 				
 				<h2>Support</h2>
@@ -254,7 +255,7 @@ if ( is_admin() ) {
 			function add_ozh_adminmenu_icon($hook) {
 				static $users2csvicon;
 				if (!$users2csvicon) {
-					$users2csvicon = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)). '/icon-csv.png';
+					$users2csvicon = plugin_dir_url( __FILE__ ). '/icon-csv.png';
 				}
 				if ($hook == 'users2csv.php') return $users2csvicon;
 				return $hook;
@@ -266,7 +267,7 @@ if ( is_admin() ) {
 				if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 				if ( $file == $this_plugin ){
-					$settings_link = '<a href="users.php?page=users2csv.php">' . __('Export') . '</a>';
+					$settings_link = '<a href="'.admin_url('users.php?page=users2csv.php').'">' . __('Export') . '</a>';
 					array_unshift( $links, $settings_link ); // before other links
 				}
 				return $links;
