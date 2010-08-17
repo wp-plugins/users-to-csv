@@ -4,7 +4,7 @@ Plugin Name: Users to CSV
 Plugin URI: http://yoast.com/wordpress/users-to-csv/
 Description: This plugin adds an administration screen which allows you to dump your users and/or unique commenters to a csv file.<br/> Built with code borrowed from <a href="http://www.mt-soft.com.ar/2007/06/19/csv-dump/">IAM CSV dump</a>.
 Author: Joost de Valk
-Version: 1.4.3
+Version: 1.4.4
 Author URI: http://yoast.com/
 
 Copyright 2008-2010 Joost de Valk (email: joost@yoast.com)
@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if (is_admin() && current_user_can('edit_users') ) {
+if ( is_admin() ) {
 
 	if ($_GET['page'] == "users2csv.php") {
 		function _valToCsvHelper($val, $separator, $trimFunction) {
@@ -189,19 +189,24 @@ if (is_admin() && current_user_can('edit_users') ) {
 			echo $csv;
 		}
 
-		if ($_GET['csv'] == "true") {
-			$table = $_GET['table'];
-			$sep = ";";
-			if (isset($_GET['sep'])) {
-				$sep = $_GET['sep'];
-				if ($sep == "tab") {
-					$sep = "\t";
+		function yoast_getcsv() {
+			if ($_GET['csv'] == "true") {
+				if ( !current_user_can('edit_users') )
+					wpdie('No, that won\'t be working, sorry.');
+				$table = $_GET['table'];
+				$sep = ";";
+				if (isset($_GET['sep'])) {
+					$sep = $_GET['sep'];
+					if ($sep == "tab") {
+						$sep = "\t";
+					}
 				}
-			}
-			// echo $table;
-			createcsv($table, $sep);
-			exit;
+				// echo $table;
+				createcsv($table, $sep);
+				exit;
+			}			
 		}
+		add_action('admin_menu','yoast_getcsv');
 	}
 
 	if ( ! class_exists( 'Users2CSV' ) && !$_GET['csv'] == "true" ) {
@@ -210,7 +215,7 @@ if (is_admin() && current_user_can('edit_users') ) {
 
 			function add_config_page() {
 				global $wpdb;
-				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 9, basename(__FILE__), array('Users2CSV','config_page'));
+				add_submenu_page('users.php', 'Export Users and Commenters to CSV file', 'Users2CSV', 'edit_users', basename(__FILE__), array('Users2CSV','config_page'));
 				add_filter( 'plugin_action_links', array( 'Users2CSV', 'filter_plugin_actions'), 10, 2 );
 				add_filter( 'ozh_adminmenu_icon', array( 'Users2CSV', 'add_ozh_adminmenu_icon' ) );				
 			}
